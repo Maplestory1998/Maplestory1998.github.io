@@ -16,20 +16,20 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="C++的四种类型转换运算符1.  static_cast   任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast,没有运行时类型检测来保证转换的安全性，主要有以下几种用法：  用于类层次结构中基类和子类之间指针或引用的转换  进行上行转换（把派生类的指针或引用转换成基类表示）是安全的  进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所">
+    <meta name="description" content="Linux网络编程API 主机字节序和网络字节序  主机字节序(小端字节序)：高位字节存储在高地址 网络字节序(大端字节序)：高位字节存储在低地址   相关API：   12345#include &lt;netinet&#x2F;in.h&gt; unsigned long int htonl(unsigned long int hostlong); unsigned short int htons(un">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++的四种类型转换运算符">
-<meta property="og:url" content="http://example.com/2022/02/13/Blog/index.html">
+<meta property="og:title" content="Linux网络编程API">
+<meta property="og:url" content="http://example.com/2022/02/13/Blog2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="C++的四种类型转换运算符1.  static_cast   任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast,没有运行时类型检测来保证转换的安全性，主要有以下几种用法：  用于类层次结构中基类和子类之间指针或引用的转换  进行上行转换（把派生类的指针或引用转换成基类表示）是安全的  进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所">
+<meta property="og:description" content="Linux网络编程API 主机字节序和网络字节序  主机字节序(小端字节序)：高位字节存储在高地址 网络字节序(大端字节序)：高位字节存储在低地址   相关API：   12345#include &lt;netinet&#x2F;in.h&gt; unsigned long int htonl(unsigned long int hostlong); unsigned short int htons(un">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-13T00:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-13T01:00:14.966Z">
+<meta property="article:modified_time" content="2022-02-13T19:54:13.350Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>C++的四种类型转换运算符 - Hexo</title>
+  <title>Linux网络编程API - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="C++的四种类型转换运算符">
+            <span class="h2" id="subtitle" title="Linux网络编程API">
               
             </span>
 
@@ -196,7 +196,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      600 字
+      1.4k 字
     </span>
   
 
@@ -205,7 +205,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      12 分钟
     </span>
   
 
@@ -234,32 +234,27 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">C++的四种类型转换运算符</h1>
+            <h1 style="display: none">Linux网络编程API</h1>
             
             <div class="markdown-body">
-              <h1 id="C-的四种类型转换运算符"><a href="#C-的四种类型转换运算符" class="headerlink" title="C++的四种类型转换运算符"></a>C++的四种类型转换运算符</h1><h2 id="1-static-cast"><a href="#1-static-cast" class="headerlink" title="1.  static_cast"></a>1.  static_cast</h2><p>   任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast,没有运行时类型检测来保证转换的安全性，主要有以下几种用法：</p>
-<ol>
-<li><p>用于类层次结构中基类和子类之间指针或引用的转换</p>
+              <h1 id="Linux网络编程API"><a href="#Linux网络编程API" class="headerlink" title="Linux网络编程API"></a>Linux网络编程API</h1><ol>
+<li><p>主机字节序和网络字节序</p>
 <ul>
-<li><p>进行上行转换（把派生类的指针或引用转换成基类表示）是安全的</p>
-</li>
-<li><p>进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所以是不安全的。</p>
-</li>
+<li>主机字节序(小端字节序)：高位字节存储在高地址</li>
+<li>网络字节序(大端字节序)：高位字节存储在低地址<br>   相关API：   <figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;netinet/in.h&gt;</span></span><br> <span class="hljs-function"><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">int</span> <span class="hljs-title">htonl</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">int</span> hostlong)</span></span>;<br> <span class="hljs-function"><span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> <span class="hljs-type">int</span> <span class="hljs-title">htons</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> <span class="hljs-type">int</span> hostshort)</span></span>;<br> <span class="hljs-function"><span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">int</span> <span class="hljs-title">ntohl</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> <span class="hljs-type">int</span> netlong)</span></span>;<br> <span class="hljs-function"><span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> <span class="hljs-type">int</span> <span class="hljs-title">ntohs</span><span class="hljs-params">(<span class="hljs-type">unsigned</span> <span class="hljs-type">short</span> <span class="hljs-type">int</span> netshort)</span></span>;<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li><p>基本数据类型之间的转换</p>
+<li><p>通用socket地址</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/socket.h&gt;</span></span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr</span><br>&#123;<br>    <span class="hljs-type">sa_family_t</span> sa_family;<br>    <span class="hljs-type">char</span> sa_data[<span class="hljs-number">14</span>];<br>&#125;;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_in</span><br>&#123;<br>    <span class="hljs-type">sa_family_t</span> sin_family; <span class="hljs-comment">//地址族：AF_INET</span><br>    <span class="hljs-type">u_int16_t</span> sin_port;     <span class="hljs-comment">//端口号，要用网络字节序表示</span><br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">in_addr</span> sin_addr;<span class="hljs-comment">//ipv4地址结构体</span><br>&#125;;<br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">in_addr</span><br>&#123;<br>    <span class="hljs-type">u_int32_t</span> s_addr;   <span class="hljs-comment">//ipv4地址，要用网络字节序表示</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>所有专用socket地址类型的变量使用时都需要转化为通用socket地址类型sockaddr。</p>
 </li>
+<li><p>IP地址转换函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;arpa/inet.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">in_addr_t</span> <span class="hljs-title">inet_addr</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* strptr)</span></span>;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">inet_aton</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span>* cp, <span class="hljs-keyword">struct</span> in_addr* inp)</span></span>;<br><span class="hljs-function"><span class="hljs-type">char</span>* <span class="hljs-title">inet_ntoa</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> in_addr in)</span></span>;<br></code></pre></td></tr></table></figure></li>
+<li><p>socket通信API</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-comment">/* 创建socket */</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">socket</span><span class="hljs-params">(<span class="hljs-type">int</span> domain, <span class="hljs-type">int</span> type, <span class="hljs-type">int</span> protocol)</span></span>;<br><br><span class="hljs-comment">/* 命名socket */</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">bind</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd, <span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> sockaddr* my_addr, <span class="hljs-type">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-comment">/* 服务器监听socket */</span><br><span class="hljs-comment">/* accept从listen监听队列中接受的连接至少已经完成了TCP三次握手的前两个步骤 */</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">listen</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd, <span class="hljs-type">int</span> backlog)</span></span>;<br><br><span class="hljs-comment">/* 接受连接 */</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">accept</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd, <span class="hljs-keyword">struct</span> sockaddr *addr, <span class="hljs-type">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-comment">/* 客户端发起连接 */</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">connect</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd, <span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> sockaddr *serv_addr, <span class="hljs-type">socklen_t</span> addrlen)</span></span>;<br><br><span class="hljs-comment">/* 关闭连接 父进程和子进程中都应调用*/</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">close</span><span class="hljs-params">(<span class="hljs-type">int</span> fd)</span></span><br></code></pre></td></tr></table></figure></li>
+<li><p>TCP数据读写</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">ssize_t</span> <span class="hljs-title">recv</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd, <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span> len, <span class="hljs-type">int</span> flags)</span></span>;<br><span class="hljs-function"><span class="hljs-type">ssize_t</span> <span class="hljs-title">send</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *buf, <span class="hljs-type">size_t</span>, <span class="hljs-type">int</span> flags)</span></span>;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="2-const-cast"><a href="#2-const-cast" class="headerlink" title="2.   const_cast"></a>2.   const_cast</h2><ol>
-<li>const_cast只能改变运算对象的底层const</li>
-<li>如果对象是一个常量，使用const_cast执行写操作会产生未定义的后果</li>
-</ol>
-<h2 id="3-reinterpret-cast"><a href="#3-reinterpret-cast" class="headerlink" title="3.   reinterpret_cast"></a>3.   reinterpret_cast</h2><p>通常为运算对象的位模式提供较低层次上的重新解释</p>
-<h2 id="4-dynamic-cast"><a href="#4-dynamic-cast" class="headerlink" title="4.   dynamic_cast"></a>4.   dynamic_cast</h2><p>适用于我们想使用基类对象的指针或引用执行某个派生类操作并且该操作不是虚函数。dynamic_cast在向下转换时有类型检测的功能，比static_cast更安全。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">dynamic_cast</span>&lt;type*&gt;(e)<br><span class="hljs-built_in">dynamic_cast</span>&lt;type&amp;&gt;(e)<br><span class="hljs-built_in">dynamic_cast</span>&lt;type&amp;&amp;&gt;(e)<br></code></pre></td></tr></table></figure>
-<p>上述形式中，e的类型应该是type的公有派生类、公有基类或就是type类型。</p>
-<p>如果指针类型转换失败，结果为0，如果转换目标是引用类型并且失败了，抛出bad_cast异常
-  </p>
 
             </div>
             <hr>
@@ -280,15 +275,15 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/02/13/Blog/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C++的四种类型转换运算符</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2022/02/13/Blog2/">
-                        <span class="hidden-mobile">Linux网络编程API</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
