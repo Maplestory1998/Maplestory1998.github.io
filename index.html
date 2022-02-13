@@ -77,13 +77,9 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/Maplestory1998" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-		        
-					<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-		        
-					<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
 			</div>
 		</nav>
@@ -118,13 +114,9 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/Maplestory1998" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
-			        
-						<a class="rss" target="_blank" href="#" title="rss"><i class="icon-rss"></i></a>
-			        
-						<a class="zhihu" target="_blank" href="#" title="zhihu"><i class="icon-zhihu"></i></a>
 			        
 				</div>
 			</nav>
@@ -157,7 +149,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="I-lovd-Mao-Qian"><a href="#I-lovd-Mao-Qian" class="headerlink" title="I lovd Mao Qian"></a>I lovd Mao Qian</h1>
+        <h1 id="C-的四种类型转换运算符"><a href="#C-的四种类型转换运算符" class="headerlink" title="C++的四种类型转换运算符"></a>C++的四种类型转换运算符</h1><h2 id="1-static-cast"><a href="#1-static-cast" class="headerlink" title="1.  static_cast"></a>1.  static_cast</h2><p>   任何具有明确定义的类型转换，只要不包含底层const，都可以使用static_cast,没有运行时类型检测来保证转换的安全性，主要有以下几种用法：</p>
+<ol>
+<li><p>用于类层次结构中基类和子类之间指针或引用的转换</p>
+<ul>
+<li><p>进行上行转换（把派生类的指针或引用转换成基类表示）是安全的</p>
+</li>
+<li><p>进行下行转换（把基类指针或引用转换成派生类表示）时，由于没有动态类型检查，所以是不安全的。</p>
+</li>
+</ul>
+</li>
+<li><p>基本数据类型之间的转换</p>
+</li>
+</ol>
+<h2 id="2-const-cast"><a href="#2-const-cast" class="headerlink" title="2.   const_cast"></a>2.   const_cast</h2><ol>
+<li>const_cast只能改变运算对象的底层const</li>
+<li>如果对象是一个常量，使用const_cast执行写操作会产生未定义的后果</li>
+</ol>
+<h2 id="3-reinterpret-cast"><a href="#3-reinterpret-cast" class="headerlink" title="3.   reinterpret_cast"></a>3.   reinterpret_cast</h2><p>通常为运算对象的位模式提供较低层次上的重新解释</p>
+<h2 id="4-dynamic-cast"><a href="#4-dynamic-cast" class="headerlink" title="4.   dynamic_cast"></a>4.   dynamic_cast</h2><p>适用于我们想使用基类对象的指针或引用执行某个派生类操作并且该操作不是虚函数。dynamic_cast在向下转换时有类型检测的功能，比static_cast更安全。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dynamic_cast</span>&lt;type*&gt;(e)</span><br><span class="line"><span class="built_in">dynamic_cast</span>&lt;type&amp;&gt;(e)</span><br><span class="line"><span class="built_in">dynamic_cast</span>&lt;type&amp;&amp;&gt;(e)</span><br></pre></td></tr></table></figure>
+<p>上述形式中，e的类型应该是type的公有派生类、公有基类或就是type类型。</p>
+<p>如果指针类型转换失败，结果为0，如果转换目标是引用类型并且失败了，抛出bad_cast异常
+  </p>
+
       
 
       
@@ -167,10 +182,6 @@
       
       
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/02/12/Blog/">展开全文 >></a>
-        </p>
       
 
       
@@ -226,7 +237,7 @@
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
-		open_in_new: false,
+		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
