@@ -16,20 +16,20 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="C++11新特性 auto类型说明符   auto定义的变量必须有初始值 当引用被用作初始值时，真正参与初始化的其实是引用对象的值，此时编译器以引用对象的类型作为auto的类型 auto一般会忽略顶层const，底层const则会保留下来。如果希望推断出的类型是一个顶层const，需要明确指出123const int ci &#x3D; 3;auto e &#x3D; &amp;ci;const auto f &#x3D; c">
+    <meta name="description" content="C++中有几种可调用的对象：函数、函数指针、lambda表达式、bind创建的对象以及重载了函数调用运算符的类，本文对其进行归纳介绍 lambda表达式 lambda表达式形式 1[capture list](parameter list) -&gt; return type &amp;#123;function body&amp;#125; 我们可以忽略参数列表和返回类型，但必须永远包含捕获列表和函数体。  如">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++11新特性">
-<meta property="og:url" content="http://example.com/2022/02/13/Blog3/index.html">
+<meta property="og:title" content="可调用对象">
+<meta property="og:url" content="http://example.com/2022/02/24/%E5%8F%AF%E8%B0%83%E7%94%A8%E5%AF%B9%E8%B1%A1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="C++11新特性 auto类型说明符   auto定义的变量必须有初始值 当引用被用作初始值时，真正参与初始化的其实是引用对象的值，此时编译器以引用对象的类型作为auto的类型 auto一般会忽略顶层const，底层const则会保留下来。如果希望推断出的类型是一个顶层const，需要明确指出123const int ci &#x3D; 3;auto e &#x3D; &amp;ci;const auto f &#x3D; c">
+<meta property="og:description" content="C++中有几种可调用的对象：函数、函数指针、lambda表达式、bind创建的对象以及重载了函数调用运算符的类，本文对其进行归纳介绍 lambda表达式 lambda表达式形式 1[capture list](parameter list) -&gt; return type &amp;#123;function body&amp;#125; 我们可以忽略参数列表和返回类型，但必须永远包含捕获列表和函数体。  如">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-02-13T00:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-23T16:38:54.842Z">
+<meta property="article:published_time" content="2022-02-24T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-24T21:28:54.094Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>C++11新特性 - Hexo</title>
+  <title>可调用对象 - Hexo</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="C++11新特性">
+            <span class="h2" id="subtitle" title="可调用对象">
               
             </span>
 
@@ -185,8 +185,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-02-13 00:00" pubdate>
-        2022年2月13日 凌晨
+      <time datetime="2022-02-24 00:00" pubdate>
+        2022年2月24日 凌晨
       </time>
     </span>
   
@@ -196,7 +196,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      1.4k 字
     </span>
   
 
@@ -205,7 +205,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      9 分钟
+      12 分钟
     </span>
   
 
@@ -234,36 +234,39 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">C++11新特性</h1>
+            <h1 style="display: none">可调用对象</h1>
             
             <div class="markdown-body">
-              <h1 id="C-11新特性"><a href="#C-11新特性" class="headerlink" title="C++11新特性"></a>C++11新特性</h1><ol>
-<li>auto类型说明符</li>
+              <p><strong>C++中有几种可调用的对象：函数、函数指针、lambda表达式、bind创建的对象以及重载了函数调用运算符的类，本文对其进行归纳介绍</strong></p>
+<h1 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h1><ol>
+<li><p>lambda表达式形式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp">[capture list](parameter list) -&gt; <span class="hljs-keyword">return</span> type &#123;function body&#125;<br></code></pre></td></tr></table></figure>
+<p>我们可以忽略参数列表和返回类型，但必须永远包含捕获列表和函数体。</p>
+<ul>
+<li>如果lambda的函数体包含任何单一return语句之外的内容，且未指定返回类型，则返回void;</li>
+<li>捕获列表只用于局部非static变量，lambda可以直接使用局部static变量和全局变量；</li>
+<li>当定义一个lambda时，编译器生成一个与lambda对应的新的类类型。</li>
+</ul>
+</li>
+<li><p>隐式捕获：</p>
+<p>当我们混合使用隐式捕获和显示捕获时，需遵守:</p>
+<ul>
+<li>捕获列表中的第一个元素必须是一个&amp;或&#x3D;，此符号制定了默认捕获方式为引用或值；</li>
+<li>显示捕获的变量必须使用与隐式捕获不同的方式。   <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//os隐式捕获，引用捕获方式；c显示捕获，值捕获方式</span><br>for_each(words.<span class="hljs-built_in">begin</span>(), words.<span class="hljs-built_in">end</span>(), <br>        [&amp;, c](<span class="hljs-type">const</span> string &amp;s) &#123; os &lt;&lt; s &lt;&lt; c;&#125;);<br><span class="hljs-comment">//os显示捕获，引用捕获方式，c饮食捕获，值捕获方式</span><br>for_each(words.<span class="hljs-built_in">begin</span>(), words.<span class="hljs-built_in">end</span>(),<br>        [=, &amp;os](<span class="hljs-type">const</span> string &amp;s) &#123; os &lt;&lt; s &lt;&lt; c;&#125;);<br><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>可变lambda</p>
+<p>默认情况下，对于一个值被拷贝的变量，lambda不会改变其值。如果我们希望能改改变一个被捕获变量的值，就必须在参数列表首加上关键字mutable。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">size_t</span> v1 = <span class="hljs-number">42</span>;<br>    <span class="hljs-keyword">auto</span> f = [v1]() <span class="hljs-keyword">mutable</span> &#123; <span class="hljs-keyword">return</span> ++v1;  &#125;;<br>    v1 = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">auto</span> j = <span class="hljs-built_in">f</span>(); <span class="hljs-comment">//j = 43;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<hr>
+<p>一个引用捕获的变量是否可以修改依赖于此引用指向的是一个const类型还是一个非const类型</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">size_t</span> v1 = <span class="hljs-number">42</span>;<br>    <span class="hljs-keyword">auto</span> f2 = [&amp;v1] &#123; <span class="hljs-keyword">return</span> ++v1;&#125;;<br>    v1 = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">auto</span> j = <span class="hljs-built_in">f2</span>();   <span class="hljs-comment">//j = 1;</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
-<ul>
-<li>auto定义的变量必须有初始值</li>
-<li>当引用被用作初始值时，真正参与初始化的其实是引用对象的值，此时编译器以引用对象的类型作为auto的类型</li>
-<li>auto一般会忽略顶层const，底层const则会保留下来。如果希望推断出的类型是一个顶层const，需要明确指出<figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">const</span> <span class="hljs-type">int</span> ci = <span class="hljs-number">3</span>;<br><span class="hljs-keyword">auto</span> e = &amp;ci;<br><span class="hljs-type">const</span> <span class="hljs-keyword">auto</span> f = ci;<br></code></pre></td></tr></table></figure>
-e的类型为const int *, f为const int;</li>
-<li>设一个类型为auto的引用时，初始值中的顶层常量属性仍然保留。如果我们给初始值绑定了一个引用，则此时的常量就不是顶层常量了。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">auto</span> &amp;g = ci; <span class="hljs-comment">//g: const int</span><br><span class="hljs-keyword">auto</span> &amp;h = <span class="hljs-number">42</span>; <span class="hljs-comment">//error! 不能为非常量引用绑定字面值</span><br><span class="hljs-type">const</span> <span class="hljs-keyword">auto</span> &amp;j = <span class="hljs-number">42</span> ; <span class="hljs-comment">// 可以为常量引用绑定字面值</span><br></code></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="constexpr和常量表达式"><a href="#constexpr和常量表达式" class="headerlink" title="constexpr和常量表达式"></a>constexpr和常量表达式</h1><h2 id="常量表达式"><a href="#常量表达式" class="headerlink" title="常量表达式"></a>常量表达式</h2><p>常量表达式是指值不会改变并且在编译过程就能得到计算结果的表达式。C++11新标准规定，允许将变量声明为constexpr类型以便由编译器来验证变量的值是否是一个常量表达式。声明为constexpr的变量一定是一个常量，并且必须用到常量表达式初始化：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">constexpr</span> <span class="hljs-type">int</span> mf = <span class="hljs-number">20</span>;      <span class="hljs-comment">//20是常量表达式</span><br><span class="hljs-keyword">constexpr</span> limit = mf + <span class="hljs-number">1</span>;   <span class="hljs-comment">//常量表达式</span><br><span class="hljs-keyword">constexpr</span> <span class="hljs-type">int</span> sz = <span class="hljs-built_in">size</span>();  <span class="hljs-comment">//只有当size是一个constexpr函数时才是一条正确的声明语句</span><br></code></pre></td></tr></table></figure>
-<hr>
-<h2 id="字面值类型"><a href="#字面值类型" class="headerlink" title="字面值类型"></a>字面值类型</h2><p>对声明constexpr时用到的类型有所限制，就成为字面值类型（算术类型、引用和指针）</p>
-<ul>
-<li>一个constexpr指针的初始值必须是nullptr或0，或者是存储于某个固定地址中的对象；</li>
-<li>constexpr在指针声明中只对指针有效，与指针所指的对象无关。</li>
-</ul>
-<hr>
-<h2 id="constexpr函数"><a href="#constexpr函数" class="headerlink" title="constexpr函数"></a>constexpr函数</h2><p>constexpr函数指能用于常量表达式的函数，需满足以下条件：</p>
-<ul>
-<li>函数的返回类型及所有形参的类型都得是字面值类型；</li>
-<li>函数体中必须有且只有一条return语句；也可以有不执行任何操作的语句；</li>
-<li>constexpr函数被隐式的指定为内联函数。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-type">int</span> <span class="hljs-title">new_sz</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-number">42</span>; &#125;<br><span class="hljs-keyword">constexpr</span> <span class="hljs-type">int</span> foo = <span class="hljs-built_in">new_sz</span>();<br></code></pre></td></tr></table></figure></li>
-<li>允许constexpr函数的返回值并非一个常量:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">//如果以cnt是常量表达式，它的返回值也是常量表达式，反之则不然</span><br><span class="hljs-function"><span class="hljs-keyword">constexpr</span> <span class="hljs-type">size_t</span> <span class="hljs-title">scale</span><span class="hljs-params">(<span class="hljs-type">size_t</span> cnt)</span></span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">new_sz</span>() *cnt;&#125;<br></code></pre></td></tr></table></figure></li>
-</ul>
+<h1 id="重载了函数调用运算符的类"><a href="#重载了函数调用运算符的类" class="headerlink" title="重载了函数调用运算符的类"></a>重载了函数调用运算符的类</h1><p>如果类定义了调用运算符，则该类的对象称作函数对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">absInt</span>&#123;<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span> <span class="hljs-params">(<span class="hljs-type">int</span> val)</span> <span class="hljs-type">const</span></span>&#123;<br>        <span class="hljs-keyword">return</span> val &lt; <span class="hljs-number">0</span>? -val: val;<br>    &#125;<br>&#125;;<br><br><span class="hljs-type">int</span> i = <span class="hljs-number">-42</span>;<br>absInt absObj;<br><span class="hljs-type">int</span> ui = <span class="hljs-built_in">absObj</span>(i);<br></code></pre></td></tr></table></figure>
 
+<h1 id="标准库定义的函数对象"><a href="#标准库定义的函数对象" class="headerlink" title="标准库定义的函数对象"></a>标准库定义的函数对象</h1><p>标准库定义了一组表示算术运算符、关系运算符和逻辑运算符的类，每个类分别定义了一个执行明明操作的调用运算符。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs cpp">plus&lt;<span class="hljs-type">int</span>&gt; intAdd;   <span class="hljs-comment">//可执行int加法的函数对</span><br>negate&lt;<span class="hljs-type">int</span>&gt; intNegate;  <span class="hljs-comment">//可对int值取反的函数对</span><br><span class="hljs-type">int</span> sum = <span class="hljs-built_in">intAdd</span>(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)    <span class="hljs-comment">//  sum = 30</span><br>sum = <span class="hljs-built_in">intNegate</span>(<span class="hljs-built_in">intAdd</span>(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)); <span class="hljs-comment">// sum = -30;</span><br>sum = <span class="hljs-built_in">intAdd</span>(<span class="hljs-number">10</span>, <span class="hljs-built_in">intNegate</span>(<span class="hljs-number">10</span>));    <span class="hljs-comment">//  sum = 0;</span><br></code></pre></td></tr></table></figure>
             </div>
             <hr>
             <div>
@@ -283,18 +286,12 @@ e的类型为const int *, f为const int;</li>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/02/13/Blog2/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Linux网络编程API</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/13/Blog5/">
-                        <span class="hidden-mobile">类的相关知识</span>
+                      <a href="/2022/02/14/Blog4/">
+                        <span class="hidden-mobile">Http相关知识</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

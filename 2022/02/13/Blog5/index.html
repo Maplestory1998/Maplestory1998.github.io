@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="类的特性构造函数特性 构造函数不能被声明成const； 合成的默认构造函数将按照如下规则初始化数据成员： 如果存在类内初始值，用它来初始化成员； 否则，默认初始化该成员。   C++11中，可以在参数列表后加&#x3D;default要求编译器生成构造函数; 如果类包含有内置类型或复合类型的成员，则只有当这些成员全都被赋予了类内初始值时，这个类才适合于使用合成的默认构造函数； 如果一个构造函数为所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类的相关知识">
+<meta property="og:url" content="http://example.com/2022/02/13/Blog5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="类的特性构造函数特性 构造函数不能被声明成const； 合成的默认构造函数将按照如下规则初始化数据成员： 如果存在类内初始值，用它来初始化成员； 否则，默认初始化该成员。   C++11中，可以在参数列表后加&#x3D;default要求编译器生成构造函数; 如果类包含有内置类型或复合类型的成员，则只有当这些成员全都被赋予了类内初始值时，这个类才适合于使用合成的默认构造函数； 如果一个构造函数为所">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-13T00:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-24T23:17:52.972Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>类的相关知识 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="类的相关知识">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-13 00:00" pubdate>
+        2022年2月13日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">类的相关知识</h1>
+            
+            <div class="markdown-body">
+              <h1 id="类的特性"><a href="#类的特性" class="headerlink" title="类的特性"></a>类的特性</h1><h2 id="构造函数特性"><a href="#构造函数特性" class="headerlink" title="构造函数特性"></a>构造函数特性</h2><ol>
+<li>构造函数不能被声明成const；</li>
+<li>合成的默认构造函数将按照如下规则初始化数据成员：<ul>
+<li>如果存在类内初始值，用它来初始化成员；</li>
+<li>否则，默认初始化该成员。</li>
+</ul>
+</li>
+<li>C++11中，可以在参数列表后加&#x3D;default要求编译器生成构造函数;</li>
+<li>如果类包含有内置类型或复合类型的成员，则只有当这些成员全都被赋予了类内初始值时，这个类才适合于使用合成的默认构造函数；</li>
+<li>如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数；</li>
+<li>如果构造函数只接受一个实参，则它实际上定义了转换为此类类型的隐式转换机制（转换构造函数)；</li>
+<li>只能在类内声明构造函数时使用explicit关键字，在类外部定义时不应重复；</li>
+</ol>
+<h2 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h2><ol>
+<li>类可以把普通函数、其他的类或其他类的成员函数定义成友元；</li>
+<li>友元声明只能出现在类定义的内部，且友元不是类的成员也不受它所在区域访问控制级别的约束；</li>
+<li>必须在友元声明之外再专门对函数进行一次声明；</li>
+<li>我们通常把友元的声明与类本身放置在同一个头文件中（类的外部）；</li>
+<li>友元声明的作用是影响访问权限，它本身并非普通意义上的声明，这意味着：<ul>
+<li>类和非成员函数的声明不是必须在他们的友元声明之前；</li>
+<li>就算在类的内部定义该函数，也必须在类的外部提供相应的声音从而使得函数可见；</li>
+</ul>
+</li>
+</ol>
+<h2 id="const相关"><a href="#const相关" class="headerlink" title="const相关"></a>const相关</h2><ol>
+<li>紧跟在参数列表后面的const表示this是一个指向常量的指针；</li>
+<li>可以通过在变量中加mutable而在const成员函数内修改该变量；</li>
+<li>一个const成员函数如果以引用的形式返回*this，那么它的返回类型将是常量引用；</li>
+</ol>
+<h2 id="类的作用域"><a href="#类的作用域" class="headerlink" title="类的作用域"></a>类的作用域</h2><ol>
+<li>成员函数中使用的名字按如下方式查找：<ul>
+<li>首先在成员函数内查找该名字的声明，只有在函数使用之前出现的声明才被考虑；</li>
+<li>如果在成员函数内没有找到，则在类内继续查找，这时类的所有成员都可以被考虑；</li>
+<li>如果类内也没找到该名字的声明，在成员函数定义之前的作用域内继续查找；</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h1 id="拷贝控制"><a href="#拷贝控制" class="headerlink" title="拷贝控制"></a>拷贝控制</h1><h2 id="拷贝、赋值与销毁"><a href="#拷贝、赋值与销毁" class="headerlink" title="拷贝、赋值与销毁"></a>拷贝、赋值与销毁</h2><h3 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h3><ul>
+<li>即使我们定义了其他构造函数，编译器也会为我们合成一个拷贝构造函数；</li>
+<li>拷贝初始化是依靠拷贝构造函数或移动构造函数来完成的；</li>
+<li>标准库容器中，insert或push是拷贝初始化，emplace是直接初始化，效率更高；</li>
+<li>拷贝初始化时，编辑器可能跳过拷贝&#x2F;移动构造函数，进行直接初始化，但拷贝&#x2F;移动构造函数必须是存在且可访问的。<h3 id="阻止拷贝"><a href="#阻止拷贝" class="headerlink" title="阻止拷贝"></a>阻止拷贝</h3></li>
+</ul>
+<ol>
+<li>定义删除的函数<ul>
+<li>如果一个类有数据成员不能默认构造、拷贝、复制或销毁，则对应的成员函数将被定义为删除的</li>
+</ul>
+</li>
+<li>为了阻止友元和成员函数进行拷贝，将拷贝控制成员声明为private的，但并不定义他们。</li>
+</ol>
+<hr>
+<h2 id="对象移动"><a href="#对象移动" class="headerlink" title="对象移动"></a>对象移动</h2><h3 id="右值引用"><a href="#右值引用" class="headerlink" title="右值引用"></a>右值引用</h3><ol>
+<li>返回非引用类型的函数，我们不能将一个左值引用绑定到这类表达式上，但我们可以将一个const的左值引用或者一个右值引用绑定到这类表达式上；</li>
+<li>变量是左值，我们不能将一个右值引用绑定到一个右值引用类型的变量上；但可以显示的将一个左值转换为对应的右值引用类型；<figure class="highlight cpp"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-type">int</span> &amp;&amp;rr1 = <span class="hljs-number">42</span>;     <span class="hljs-comment">//正确，字面常量是右值</span><br><span class="hljs-type">int</span> &amp;&amp;rr2 = rr1;    <span class="hljs-comment">//错误，表达式rr1是左值！</span><br><span class="hljs-type">int</span> &amp;&amp;rr3 = std::<span class="hljs-built_in">move</span>(rr1); <span class="hljs-comment">//ok</span><br></code></pre></td></tr></table></figure></li>
+<li>我们额可以销毁一个移后源对象，也可以赋予它新值，但不能使用一个移后源对象的值。</li>
+</ol>
+<h2 id="移动构造函数和移动赋值运算符"><a href="#移动构造函数和移动赋值运算符" class="headerlink" title="移动构造函数和移动赋值运算符"></a>移动构造函数和移动赋值运算符</h2><ol>
+<li>只有当一个类没有定义任何自己版本的拷贝控制成员（包括析构函数），且它的所有数据成员都能移动构造或移动赋值时，编译器才会为它合成移动构造函数或移动赋值运算符；</li>
+<li>定义了一个移动构造函数或移动赋值运算符的类必须也定义自己的拷贝操作，否则，这些成员默认地被定义为删除的；</li>
+<li>由于移动操作“窃取”资源，它通常不分配任何资源，因此不会抛出任何异常。不抛出异常的移动构造函数和移动赋值运算符必须标记为noexcept;</li>
+<li>除非vector知道元素类型的移动构造函数不会抛出异常，否则在重新分配内存的过程中，它就必须使用拷贝构造函数而不是移动构造函数。</li>
+</ol>
+<h2 id="右值和左值引用成员函数"><a href="#右值和左值引用成员函数" class="headerlink" title="右值和左值引用成员函数"></a>右值和左值引用成员函数</h2><p>我们可以在一个右值上调用成员函数，我们可以强制左侧运算对象是一个左值。引用限定符应该跟在const限定符之后。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Foo</span>&#123;<br><span class="hljs-keyword">public</span>:<br>    Foo &amp;<span class="hljs-keyword">operator</span>=(<span class="hljs-type">const</span> Foo&amp;) &amp; <span class="hljs-comment">//只能向可修改的左值赋值</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h1 id="OOP"><a href="#OOP" class="headerlink" title="OOP"></a>OOP</h1><ol>
+<li><p>派生类的成员或友元只能通过派生类对象来访问基类的受保护成员。派生类对于一个基类对象中的受保护成员没有任何访问权限。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span>&#123;<br>    <span class="hljs-keyword">protected</span>:<br>        <span class="hljs-type">int</span> prot_mem;<br>&#125;;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Sneaky</span> : <span class="hljs-keyword">public</span> Base&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">clobber</span><span class="hljs-params">(Sneaky&amp;)</span></span>;   <span class="hljs-comment">//能访问Sneaky:prot_mem</span><br>    <span class="hljs-function"><span class="hljs-keyword">friend</span> <span class="hljs-type">void</span> <span class="hljs-title">clobber</span><span class="hljs-params">(Base&amp;)</span></span>;     <span class="hljs-comment">//不能访问Base::prot_mem</span><br>    <span class="hljs-type">int</span> j;                          <span class="hljs-comment">//private</span><br>&#125;<br><span class="hljs-comment">//正确：clobber能访问Sneaky对象的private和protected成员</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clobber</span><span class="hljs-params">(Sneaky &amp;S)</span> </span>&#123; s.j = s.prot_mem = <span class="hljs-number">0</span>;&#125;<br><span class="hljs-comment">//错误：clobber不能访问Base的protected成员</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">clobber</span><span class="hljs-params">(Base &amp;b)</span> </span>&#123; b.prot_mem = <span class="hljs-number">0</span>;&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>派生类向基类转换的可访问性：</p>
+<p>派生类向基类的转换是否可访问由使用该转换的代码块定，同时派生类的派生访问说明符也会有影响。假定D继承自B：</p>
+<ul>
+<li>只有当D公有的地继承B时，用户代码才能使用派生类向积累的转换；</li>
+<li>不论D以什么方式继承B，D的成员函数和友元都能使用派生类向基类的转换；</li>
+<li>如果D继承B的方式是公有的或者受保护的，则D的派生类的成员和友元可以使用D向B的类型转换。</li>
+</ul>
+<p><strong>对于代码中的某个给定节点来说，如果积累的公有成员是可访问的，则派生类向基类的类型转换也是可访问的；反之则不行。</strong></p>
+</li>
+<li><p>名字查找与继承：</p>
+<p>假定我们调用p-&gt;mem(),则依次执行以下4个步骤：</p>
+<ol>
+<li>首先确定p的静态类型。因为我们调用的是一个成员，所以该类型必然是类类型；</li>
+<li>在p的静态类型对应的类中查找mem。如果找不到，则依次在直接基类中不断查找直至到达继承链的顶端。如果找遍了该类及其基类仍然找不到，则编译器将报错；</li>
+<li>一旦找到了mem，就进行常规的类型检查以确定对于当前找到的mem，本次调用是否合法；</li>
+<li>假设调用合法，则编译器将根据调用的是否是虚函数而产生不同的代码：<ul>
+<li>如果mem是虚函数且我们是通过引用或指针进行的调用，则编译器产生的代码将在运行时确定到底运行该虚函数的哪个版本，依据是对象的动态类型；</li>
+<li>反之，则编译器将产生一个常规函数调用。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/02/13/Blog3/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C++11新特性</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
